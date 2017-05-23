@@ -1,0 +1,107 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication
+{
+
+    class Perm2
+    {
+        //入力される文字列
+        string str;
+
+        //入力された文字列の文字数
+        int len;
+
+        //型変換用配列
+        char[] words;
+
+        //配列wordsの添え字をシャッフルするための配列
+        int[] index;
+
+        static void Main(string[] args)
+        {
+            //メインメソッドから自クラスのメソッドを呼び出すためにインスタンス化
+            Perm2 p = new Perm2();
+
+            //入力された文字列の読み込み
+            p.GetName();
+
+            //入力されたstring型の文字列をchar型の配列に代入
+            p.words = p.str.ToCharArray();
+            
+            //文字数のカウント
+            p.len = p.str.Length;
+
+            //配列indexの要素数を決定、挿入するための要素を2つ増やす
+            p.index = new int[p.len+2];
+
+            //再帰的生成法（挿入法）による順列生成と書き出し
+            p.GetPerm(1);
+            
+
+
+#if DEBUG
+            Console.WriteLine("続行するには何かキーを押してください．．．");
+            Console.ReadKey();
+#endif
+        }
+
+        //文字列入力
+        private void GetName()
+        {
+            Console.Write("文字列を入力してください。\r\n入力；");
+            str = Console.ReadLine();
+
+
+            //nullチェック
+            if (str == null || str == "")
+            {
+                Console.WriteLine("無効な値です。");
+                //再入力
+                GetName();
+            }
+            return;
+        }
+
+        //順列の生成
+        private void GetPerm(int n)
+        {
+            int i,j;
+
+            //順列の書き出し
+            if (n > len)
+            {
+                Console.Write("\"");
+                for (i = 1; i <= len; i++)
+                {
+                    Console.Write(words[index[i]-1]);
+                }
+                Console.Write("\""+"\r\n");
+                return;
+            }
+
+            //添字の並べ替え
+            for(i=n;i>= 1; i--)
+            {
+                //要素nをi番目に挿入
+                index[i + 1] = index[i];
+                index[i] = n;
+
+                //再帰で次の要素へ
+                GetPerm(n + 1);       
+            }
+
+            //添字の状態を戻す
+            for (j = 2; j <= n; j++)
+            {
+                index[j - 1] = index[j];
+            }
+            return;
+        }
+    }
+}
+
+
