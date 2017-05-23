@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleApplication
+
+namespace PermulationTest2
 {
+
+
 
     class Perm2
     {
@@ -91,7 +90,8 @@ namespace ConsoleApplication
                 index[i] = n;
 
                 //再帰で次の要素へ
-                GetPerm(n + 1);       
+                GetPerm(n + 1);
+                
             }
 
             //添字の状態を戻す
