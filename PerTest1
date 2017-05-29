@@ -2,105 +2,104 @@ using System;
 
 namespace PermulationTest
 {
-    class Perm1
-    {
-        //入力される文字列
-        string str;
+	class Perm1
+	{
+		//入力される文字列
+		string str;
 
-        //入力された文字列の文字数
-        int len;
+		//入力された文字列の文字数
+		int len;
 
-        //型変換用配列
-        char[] words;
+		//型変換用配列
+		char[] words;
 
-        //配列wordsの添え字をシャッフルするための配列
-        int[] index;
+		//配列wordsの添え字をシャッフルするための配列
+		int[] index;
 
-        //重複チェックのための配列
-        bool[] flg;
+		//重複チェックのための配列
+		bool[] flg;
 
-        static void Main(string[] args)
-        {
-            //メインメソッドから自クラスのメソッドを呼び出すためにインスタンス化
-            Perm1 p = new Perm1();
+		static void Main(string[] args)
+		{
+			//メインメソッドから自クラスのメソッドを呼び出すためにインスタンス化
+			Perm1 p = new Perm1();
 
-            //入力された文字列の読み込み
-            p.GetName();
+			//入力された文字列の読み込み
+			p.GetName();
 
-            //入力されたstring型の文字列をchar型の配列に代入
-            p.words = p.str.ToCharArray();
-            
-            //文字数のカウント
-            p.len = p.str.Length;
+			//入力されたstring型の文字列をchar型の配列に代入
+			p.words = p.str.ToCharArray();
 
-            //配列index,flgの要素数を決定
-            p.index = new int[p.len];
-            p.flg = new bool[p.len];
+			//文字数のカウント
+			p.len = p.str.Length;
 
-            //再帰的生成法による順列生成と書き出し
-            p.GetPerm(1);
-            
+			//配列index,flgの要素数を決定
+			p.index = new int[p.len];
+			p.flg = new bool[p.len];
+
+			//再帰的生成法による順列生成と書き出し
+			p.GetPerm(0);
+
 
 
 #if DEBUG
-            Console.WriteLine("続行するには何かキーを押してください．．．");
-            Console.ReadKey();
+			Console.WriteLine("続行するには何かキーを押してください．．．");
+			Console.ReadKey();
 #endif
-        }
+		}
 
-        //文字列入力
-        private void GetName()
-        {
-            Console.Write("文字列を入力してください。\r\n入力；");
-            str = Console.ReadLine();
+		//文字列入力
+		private void GetName()
+		{
+			Console.Write("文字列を入力してください。\r\n入力；");
+			str = Console.ReadLine();
 
 
-            //nullチェック
-            if (str == null || str == "")
-            {
-                Console.WriteLine("無効な値です。");
-                //再入力
-                GetName();
-            }
-            return;
-        }
+			//nullチェック
+			if (str == null || str == "")
+			{
+				Console.WriteLine("無効な値です。");
+				//再入力
+				GetName();
+			}
+			return;
+		}
 
-        //順列の生成
-        private void GetPerm(int n)
-        {
-            int i,j;
+		//順列の生成
+		private void GetPerm(int n)
+		{
+			
 
-            //順列の書き出し
-            if (n == len)
-            {
+			//順列の書き出し
+			if (n == len)
+			{
                 int i;
-                Console.Write("\"");
-                for (i = 1; i <= len; i++)
-                {
-                    Console.Write(words[index[i]]);
-                }
-                Console.Write("\""+"\r\n");
-                return;
-            }
+				Console.Write("\"");
+				for (i = 0; i < len; i++)
+				{
+					Console.Write(words[index[i]]);
+				}
+				Console.Write("\"" + "\r\n");
+				return;
+			}
 
-            //添字の並べ替え
-            for(index[n]=0;index[n]<len; index[n]++)
-            {
-                //重複チェック
-                if (flg[index[n]])
-                {
-                    continue;
-                }
+			//添字の並べ替え
+			for (index[n] = 0; index[n] < len; index[n]++)
+			{
+				//重複チェック
+				if (flg[index[n]])
+				{
+					continue;
+				}
 
-                flg[index[n]] = true;
+				flg[index[n]] = true;
 
-                //再帰で次の要素へ
-                GetPerm(n + 1);
+				//再帰で次の要素へ
+				GetPerm(n + 1);
 
-                flg[index[n]] = false;   
-            }
-        }
-    }
+				flg[index[n]] = false;
+			}
+		}
+	}
 }
-
 
